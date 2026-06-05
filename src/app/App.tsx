@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, ArrowUpRight, Check, Search, ChevronDown, ChevronRight } from "lucide-react";
 import { ImageWithFallback } from "./components/figma/ImageWithFallback";
 import { DashboardMockup } from "./components/dashboard-mockup";
+import PasswordGate from "./components/PasswordGate";
 
 // Assets from imports
 import svgPaths from "../imports/Mobile/svg-q236zk8bca";
@@ -551,16 +552,18 @@ const Footer = () => {
 
 export default function App() {
   return (
-    <div className="bg-white min-h-screen selection:bg-[#d70321] selection:text-white">
-      <Navbar />
-      <main>
-        <Hero />
-        <Benefits />
-        <DesignShowcase />
-        <LabsSection />
-        <AccessSection />
-      </main>
-      <Footer />
-    </div>
+    <PasswordGate>
+      <div className="bg-white min-h-screen selection:bg-[#d70321] selection:text-white">
+        <Navbar />
+        <main>
+          <Hero />
+          <Benefits />
+          <DesignShowcase />
+          <LabsSection />
+          <AccessSection />
+        </main>
+        <Footer />
+      </div>
+    </PasswordGate>
   );
 }
