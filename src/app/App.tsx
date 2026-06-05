@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Menu, X, ArrowUpRight, Check, Search, ChevronDown, ChevronRight } from "lucide-react";
+import { Menu, X, ArrowUpRight, Check, Search, ChevronDown, ChevronRight, ExternalLink } from "lucide-react";
 import { ImageWithFallback } from "./components/figma/ImageWithFallback";
 import { DashboardMockup } from "./components/dashboard-mockup";
 import PasswordGate from "./components/PasswordGate";
@@ -153,20 +153,15 @@ const Hero = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
+          <span className="font-['Roboto_Mono'] text-[#d70321] text-xs font-bold tracking-[0.2em] uppercase mb-4 block">
+            Engineer-Led Intelligence
+          </span>
           <h1 className="font-['Work_Sans'] font-bold text-5xl md:text-7xl lg:text-8xl leading-[0.9] tracking-[-0.03em] mb-8">
-            Engineer-led intelligence.
-          </h1>
-          <p className="font-['Work_Sans'] font-normal text-2xl md:text-3xl lg:text-4xl text-[#6f6f6f] leading-tight mb-12 max-w-2xl">
             Spread your knowledge, not your spreadsheets.
-          </p>
+          </h1>
           <p className="font-['Work_Sans'] font-light text-xl md:text-2xl text-[#6f6f6f] leading-relaxed mb-12 max-w-xl">
             n2ition is an enterprise-grade platform for engineering data intelligence—built by engineers, to fit your existing tools and workflows while making engineering data easier to find, trust, and use.
           </p>
-          <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
-            <span className="font-['Work_Sans'] font-bold text-lg text-[#d70321]">
-              Our platform is built on three core tenets:
-            </span>
-          </div>
         </motion.div>
 
         <motion.div
@@ -190,45 +185,50 @@ const Hero = () => {
         </motion.div>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-12 mt-32 border-t border-[#e9e9e9] pt-20">
-        {[
-          {
-            num: "01",
-            title: "Design for adoption, not administration.",
-            desc: "Implementation-first and modular—fitting into to your real workflows so engineers stay in the work, not in admin overhead.",
-          },
-          {
-            num: "02",
-            title: "Keep context with the work.",
-            desc: "Decisions stay explainable as knowledge moves across teams and tools, amplifying your IP’s utility, reach, and value.",
-          },
-          {
-            num: "03",
-            title: "Make knowledge provable.",
-            desc: "Build a culture of verifiable proof where decisions are backed by auditable truth, not “trust me” data and institutional folklore.",
-          },
-        ].map((item, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: i * 0.1 }}
-            className="flex flex-col gap-8"
-          >
-            <span className="font-['Roboto_Mono'] text-[#d70321] text-7xl md:text-8xl font-normal tracking-tighter opacity-80 leading-none">
-              {item.num}
-            </span>
-            <div className="flex flex-col gap-4">
-              <h3 className="font-['Work_Sans'] font-bold text-2xl md:text-3xl leading-tight">
-                {item.title}
-              </h3>
-              <p className="font-['Work_Sans'] font-light text-lg text-[#6f6f6f] leading-relaxed">
-                {item.desc}
-              </p>
-            </div>
-          </motion.div>
-        ))}
+      <div className="mt-32 border-t border-[#e9e9e9] pt-20">
+        <span className="font-['Roboto_Mono'] text-[#d70321] text-xs font-bold tracking-[0.2em] uppercase mb-6 block">
+          Our Platform Is Built On Three Core Tenets
+        </span>
+        <div className="grid md:grid-cols-3 gap-12">
+          {[
+            {
+              num: "01",
+              title: "Design for adoption, not administration.",
+              desc: "Implementation-first and modular—fitting into to your real workflows so engineers stay in the work, not in admin overhead.",
+            },
+            {
+              num: "02",
+              title: "Keep context with the work.",
+              desc: "Decisions stay explainable as knowledge moves across teams and tools, amplifying your IP’s utility, reach, and value.",
+            },
+            {
+              num: "03",
+              title: "Make knowledge provable.",
+              desc: "Build a culture of verifiable proof where decisions are backed by auditable truth, not “trust me” data and institutional folklore.",
+            },
+          ].map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              className="flex flex-col gap-8"
+            >
+              <span className="font-['Roboto_Mono'] text-[#d70321] text-7xl md:text-8xl font-normal tracking-tighter opacity-80 leading-none">
+                {item.num}
+              </span>
+              <div className="flex flex-col gap-4">
+                <h3 className="font-['Work_Sans'] font-bold text-2xl md:text-3xl leading-tight">
+                  {item.title}
+                </h3>
+                <p className="font-['Work_Sans'] font-light text-lg text-[#6f6f6f] leading-relaxed">
+                  {item.desc}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
 
       <LogoCloud />
@@ -358,7 +358,7 @@ const DesignShowcase = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="lg:-mx-20"
+          className="lg:-mr-10"
         >
           <div className="bg-white rounded-xl shadow-2xl border border-[#e9e9e9] overflow-hidden">
             <ImageWithFallback
@@ -471,19 +471,19 @@ const AccessSection = () => {
           ))}
         </div>
 
-        <div className="max-w-2xl mx-auto">
-           <form id="sign-up" className="flex flex-col gap-4 mb-8" onSubmit={(e) => e.preventDefault()}>
-              <div className="grid sm:grid-cols-2 gap-4">
-                 <input type="text" placeholder="Name" className="bg-white/5 border border-white/20 rounded-full px-8 py-5 font-['Work_Sans'] text-white focus:outline-none focus:border-[#d70321] transition-colors" />
-                 <input type="email" placeholder="Work Email" className="bg-white/5 border border-white/20 rounded-full px-8 py-5 font-['Work_Sans'] text-white focus:outline-none focus:border-[#d70321] transition-colors" />
-              </div>
-              <button className="bg-[#d70321] text-white py-5 rounded-full font-['DM_Sans'] font-bold text-lg hover:bg-[#b0021b] transition-all transform hover:scale-[1.02]">
-                Apply for early access
-              </button>
-           </form>
-           <p className="font-['Roboto_Mono'] text-xs text-white/40 tracking-tight leading-relaxed">
-             Sign up to receive updates. We are obsessed with data, but we will never share yours. <a href="#" className="underline">Privacy Policy</a>
-           </p>
+        <div id="sign-up" className="max-w-xl mx-auto text-center">
+          <a
+            href="https://forms.zohopublic.com/[YOUR-ZOHO-FORM-ID-HERE]"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 bg-[#d70321] text-white px-12 py-6 rounded-full font-['DM_Sans'] font-bold text-xl hover:bg-[#b0021b] transition-all transform hover:scale-[1.02]"
+          >
+            Apply for Early Access to n2labs
+            <ExternalLink size={14} className="opacity-70" />
+          </a>
+          <p className="font-['Roboto_Mono'] text-sm text-white/60 tracking-tight leading-relaxed mt-6 max-w-md mx-auto">
+            This will open our Zoho form in a new tab. For now, early access applications are collected there.
+          </p>
         </div>
       </div>
 
