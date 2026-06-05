@@ -5,7 +5,7 @@
   "description": "n2 launch page — landing site for the n2ition engineering data intelligence platform",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thisisjess/n2-launch-page.git"
+    "url": "git+https://github.com/thisisjess/n2-launch-pg.git"
   },
   "type": "module",
   "scripts": {

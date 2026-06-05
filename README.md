@@ -3,7 +3,7 @@
 Landing page for [n2ition](https://n2ition.com) — an enterprise-grade platform for engineering data intelligence.
 
 - Original design: [Figma](https://www.figma.com/design/r7IDyPhGHT9FICdpY7sSgG/n2-launch-page)
-- GitHub: https://github.com/thisisjess/n2-launch-page
+- GitHub: https://github.com/thisisjess/n2-launch-pg
 
 ## Getting started
 
