@@ -1,0 +1,226 @@
+import React from "react";
+import { motion } from "motion/react";
+import { 
+  BarChart3, 
+  MessageSquare, 
+  MoreHorizontal, 
+  Share2, 
+  Plus, 
+  Filter, 
+  Search,
+  ChevronRight,
+  Home,
+  User,
+  CheckCircle2,
+  Clock
+} from "lucide-react";
+import { ImageWithFallback } from "./figma/ImageWithFallback";
+
+// Import Sarah Chen image from N2Studio assets
+import imgSarahChen from "../../imports/N2Studio/d26095b2bde26f9a212ea26cfda7d42f5c13f6aa.png";
+
+export const DashboardMockup = () => {
+  return (
+    <div className="w-full bg-white rounded-xl shadow-2xl border border-[#e9e9e9] overflow-hidden font-['Work_Sans']">
+      {/* Top Header/Breadcrumbs */}
+      <div className="px-6 lg:px-8 py-6 border-b border-[#f3f3f3] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-2 text-[#6f6f6f] text-[10px] lg:text-sm">
+            <Home size={12} />
+            <ChevronRight size={12} />
+            <span className="hidden sm:inline">Tensile Strength Project</span>
+            <ChevronRight size={12} className="hidden sm:inline" />
+            <span className="text-black font-medium">Tensile Test Results - Series A</span>
+          </div>
+          <h2 className="text-xl lg:text-3xl font-bold tracking-tight">Tensile Test Results - Series A</h2>
+          <p className="text-[#6f6f6f] text-xs lg:text-sm font-light">Initial tensile strength measurements for carbon fiber composites</p>
+        </div>
+        <div className="flex items-center gap-2 lg:gap-3 w-full sm:w-auto">
+          <button className="flex-1 sm:flex-none text-[#d70321] font-bold text-xs lg:text-sm px-3 lg:px-4 py-2 hover:bg-[#d70321]/5 rounded-lg transition-colors border border-[#d70321]/20 sm:border-transparent">
+            Follow
+          </button>
+          <button className="flex-1 sm:flex-none bg-[#d70321] text-white font-bold text-xs lg:text-sm px-4 lg:px-5 py-2.5 rounded-lg flex items-center justify-center gap-2 hover:bg-[#b0021b] transition-colors whitespace-nowrap">
+            <Share2 size={14} />
+            <span className="hidden lg:inline">Share Visualization</span>
+            <span className="lg:hidden">Share</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Stats Grid */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 border-b border-[#f3f3f3]">
+        {[
+          { label: "Total Rows", value: "1,850" },
+          { label: "Columns", value: "7" },
+          { label: "Engineer", value: "Mike Johnson" },
+          { label: "Reviewer", value: "Dr. Sarah Chen" },
+        ].map((stat, i) => (
+          <div key={i} className="p-4 lg:p-8 border-r border-b lg:border-b-0 last:border-r-0 border-[#f3f3f3]">
+            <p className="text-[10px] lg:text-xs font-['Roboto_Mono'] text-[#6f6f6f] uppercase tracking-widest mb-2">{stat.label}</p>
+            <p className="text-lg lg:text-2xl font-bold">{stat.value}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Main Content Area */}
+      <div className="p-4 lg:p-8 bg-[#fcfcfc] grid lg:grid-cols-3 gap-6 lg:gap-8">
+        {/* Left Column: Visual Analysis */}
+        <div className="lg:col-span-2 space-y-6">
+          <div className="bg-white p-4 lg:p-6 rounded-xl border border-[#e9e9e9] shadow-sm">
+            <div className="flex justify-between items-center mb-6 lg:mb-8">
+              <div className="flex items-center gap-2 lg:gap-3">
+                <BarChart3 size={18} className="text-[#d70321]" />
+                <h3 className="font-bold text-base lg:text-lg">Visual Analysis</h3>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="flex bg-[#f3f3f3] p-1 rounded-lg">
+                  <button className="px-2 lg:px-3 py-1 bg-white shadow-sm rounded-md text-[10px] lg:text-xs font-bold">Bar Chart</button>
+                  <button className="px-2 lg:px-3 py-1 text-[10px] lg:text-xs font-medium text-[#6f6f6f] hidden sm:block">Scatter Plot</button>
+                </div>
+                <button className="p-1.5 text-[#6f6f6f] hover:text-black transition-colors">
+                  <MoreHorizontal size={18} />
+                </button>
+              </div>
+            </div>
+
+            {/* Chart Mockup */}
+            <div className="aspect-video lg:aspect-[16/9] relative flex items-end justify-between gap-2 lg:gap-4 px-2 lg:px-4 pb-4">
+              <div className="absolute inset-0 grid grid-rows-4 pointer-events-none">
+                {[1, 2, 3, 4].map(i => (
+                  <div key={i} className="border-t border-[#f3f3f3] w-full h-full"></div>
+                ))}
+              </div>
+              {[60, 85, 45, 90, 75, 65, 80, 55, 95, 70].map((h, i) => (
+                <motion.div 
+                  key={i}
+                  initial={{ height: 0 }}
+                  animate={{ height: `${h}%` }}
+                  transition={{ delay: i * 0.05, duration: 1, ease: "easeOut" }}
+                  className="w-full bg-[#d70321]/10 border-t-2 border-[#d70321] rounded-t-sm relative group"
+                >
+                  <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-black text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-20">
+                    {h * 10} MPa
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+            <div className="flex justify-between mt-4 text-[8px] lg:text-[10px] font-['Roboto_Mono'] text-[#6f6f6f] uppercase tracking-tighter">
+              <span>Lot A-01</span>
+              <span className="hidden sm:inline">Lot A-10</span>
+              <span>Lot B-05</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column: Status Updates */}
+        <div className="space-y-6 hidden lg:block">
+          <div className="bg-white p-6 rounded-xl border border-[#e9e9e9] shadow-sm h-full">
+            <div className="flex justify-between items-center mb-6">
+              <div className="flex items-center gap-3">
+                <MessageSquare size={20} className="text-[#d70321]" />
+                <h3 className="font-bold text-lg">Status Updates</h3>
+              </div>
+              <button className="text-[#d70321] p-1.5 hover:bg-[#d70321]/5 rounded-full transition-colors">
+                <Plus size={20} />
+              </button>
+            </div>
+
+            <div className="space-y-6">
+              {[
+                {
+                  user: "Dr. Sarah Chen",
+                  role: "Reviewer",
+                  time: "2h ago",
+                  content: "Reviewed latest tensile test results. All values are within expected ranges. Proceeding to phase 2.",
+                  status: "Approved",
+                  avatar: imgSarahChen
+                },
+                {
+                  user: "Mike Johnson",
+                  role: "Engineer",
+                  time: "5h ago",
+                  content: "Completed series A testing for carbon fiber composites. Data ready for review.",
+                  status: "Completed",
+                  avatar: null
+                }
+              ].map((update, i) => (
+                <div key={i} className="flex gap-4 border-b border-[#f3f3f3] last:border-0 pb-6 last:pb-0">
+                  <div className="h-10 w-10 rounded-full bg-gray-100 shrink-0 overflow-hidden border border-[#e9e9e9]">
+                    {update.avatar ? (
+                      <ImageWithFallback src={update.avatar} alt={update.user} className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-[#d70321]/10 text-[#d70321] font-bold text-xs">
+                        {update.user.charAt(0)}
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <div className="flex justify-between items-center w-full">
+                      <span className="font-bold text-sm">{update.user}</span>
+                      <span className="text-[10px] text-[#6f6f6f]">{update.time}</span>
+                    </div>
+                    <p className="text-xs text-[#6f6f6f] leading-relaxed mb-2 line-clamp-2">{update.content}</p>
+                    <div className="flex items-center gap-1.5 text-[10px] font-bold text-[#d70321]">
+                      <CheckCircle2 size={12} />
+                      {update.status}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            <button className="w-full mt-auto pt-6 text-xs font-bold text-[#6f6f6f] hover:text-black transition-colors border-t border-[#f3f3f3]">
+              View 4 more updates
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mini Table Preview */}
+      <div className="px-4 lg:px-8 py-6 border-t border-[#f3f3f3] bg-white">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
+          <div className="flex items-center gap-4 w-full sm:w-auto">
+            <div className="relative flex-1 sm:flex-none">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6f6f6f]" size={14} />
+              <input type="text" placeholder="Search..." className="pl-9 pr-4 py-1.5 bg-[#f3f3f3] rounded-lg text-xs focus:outline-none border border-transparent focus:border-[#d70321]/30 transition-all w-full sm:w-64" />
+            </div>
+            <button className="flex items-center gap-2 text-xs font-medium text-[#6f6f6f] hover:text-black">
+              <Filter size={14} />
+              Filter
+            </button>
+          </div>
+        </div>
+        <div className="overflow-x-auto border border-[#f3f3f3] rounded-lg">
+          <table className="w-full text-left text-xs min-w-[500px]">
+            <thead className="bg-[#fcfcfc] border-b border-[#f3f3f3] text-[#6f6f6f] font-['Roboto_Mono'] uppercase">
+              <tr>
+                <th className="px-4 py-3 font-medium">Record Name</th>
+                <th className="px-4 py-3 font-medium hidden sm:table-cell">Date Created</th>
+                <th className="px-4 py-3 font-medium">Value</th>
+                <th className="px-4 py-3 font-medium">Status</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[#f3f3f3]">
+              {[
+                { name: "dp-Carbon Fiber-500", date: "6/4/2026", value: "781.50 MPa", status: "Pending", color: "text-amber-600 bg-amber-50" },
+                { name: "dp-Carbon Fiber-501", date: "6/4/2026", value: "725.80 MPa", status: "Valid", color: "text-green-600 bg-green-50" },
+                { name: "dp-Carbon Fiber-502", date: "6/4/2026", value: "785.09 MPa", status: "Valid", color: "text-green-600 bg-green-50" },
+              ].map((row, i) => (
+                <tr key={i} className="hover:bg-[#fcfcfc] transition-colors">
+                  <td className="px-4 py-3 font-bold text-[#d70321]">{row.name}</td>
+                  <td className="px-4 py-3 text-[#6f6f6f] hidden sm:table-cell">{row.date}</td>
+                  <td className="px-4 py-3 font-medium">{row.value}</td>
+                  <td className="px-4 py-3">
+                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${row.color}`}>
+                      {row.status}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+};
