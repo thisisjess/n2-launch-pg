@@ -1,7 +1,12 @@
 {
-  "name": "@figma/my-make-file",
+  "name": "n2-launch-page",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.1.0",
+  "description": "n2 launch page — landing site for the n2ition engineering data intelligence platform",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thisisjess/n2-launch-page.git"
+  },
   "type": "module",
   "scripts": {
     "build": "vite build",
