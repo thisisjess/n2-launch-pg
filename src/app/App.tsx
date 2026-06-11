@@ -219,10 +219,10 @@ const Hero = () => {
                 {item.num}
               </span>
               <div className="flex flex-col gap-4">
-                <h3 className="font-['Work_Sans'] font-bold text-2xl md:text-3xl leading-tight">
+                <h1 className="font-['Work_Sans'] font-bold text-2xl md:text-3xl leading-[0.9] tracking-[-0.03em]">
                   {item.title}
-                </h3>
-                <p className="font-['Work_Sans'] font-light text-lg text-[#6f6f6f] leading-relaxed">
+                </h1>
+                <p className="font-['Work_Sans'] font-light text-xl text-[#6f6f6f] leading-relaxed">
                   {item.desc}
                 </p>
               </div>
@@ -267,9 +267,9 @@ const Benefits = () => {
           <span className="font-['Roboto_Mono'] text-[#d70321] text-xs font-bold tracking-[0.2em] uppercase mb-6 block">
             Benefits
           </span>
-          <h2 className="font-['Work_Sans'] font-bold text-4xl md:text-6xl lg:text-7xl leading-tight tracking-tight max-w-4xl mb-8">
+          <h1 className="font-['Work_Sans'] font-bold text-5xl md:text-7xl lg:text-8xl leading-[0.9] tracking-[-0.03em] max-w-4xl mb-8">
             For teams whose system is too big to change, or too small to trust.
-          </h2>
+          </h1>
           <p className="font-['Work_Sans'] font-normal text-2xl md:text-3xl text-black/80 max-w-4xl leading-snug">
             Turn scattered technical data, supply context, and hard-won know-how into governed, reusable, model-ready knowledge so teams move faster without sacrificing rigor.
           </p>
@@ -293,8 +293,8 @@ const Benefits = () => {
                 />
               </div>
               <div className="px-4 pb-6">
-                <h3 className="font-['Work_Sans'] font-bold text-lg mb-3">{benefit.title}</h3>
-                <p className="font-['Work_Sans'] font-light text-sm text-[#6f6f6f] leading-relaxed">
+                <h1 className="font-['Work_Sans'] font-bold text-xl leading-[0.9] tracking-[-0.03em] mb-3">{benefit.title}</h1>
+                <p className="font-['Work_Sans'] font-light text-base text-[#6f6f6f] leading-relaxed">
                   {benefit.desc}
                 </p>
               </div>
@@ -327,10 +327,10 @@ const DesignShowcase = () => {
           <span className="font-['Roboto_Mono'] text-[#d70321] text-xs font-bold tracking-[0.2em] uppercase mb-6 block">
             Design
           </span>
-          <h2 className="font-['Work_Sans'] font-bold text-5xl md:text-7xl mb-10 leading-tight">
+          <h1 className="font-['Work_Sans'] font-bold text-5xl md:text-7xl lg:text-8xl leading-[0.9] tracking-[-0.03em] mb-10">
             Less platform. More progress.
-          </h2>
-          <p className="font-['Work_Sans'] font-light text-xl text-[#6f6f6f] leading-relaxed mb-12">
+          </h1>
+          <p className="font-['Work_Sans'] font-light text-xl md:text-2xl text-[#6f6f6f] leading-relaxed mb-12">
             You shouldn’t need a specialist admin crew to keep knowledge usable, and shouldn’t have to knock on the closed door of the hermit Hazards Officer at the end of the hallway to ask him to share his handwritten lab results either. Neither of you want that. n2uition is modular and workflow-led, so teams can start small, get value quickly, and scale without the overhead.
           </p>
 
@@ -338,7 +338,7 @@ const DesignShowcase = () => {
             {steps.map((step, i) => (
               <div key={i} className="flex gap-6 items-start py-5 border-t border-[#e9e9e9]">
                 <span className="font-['Work_Sans'] font-bold text-xl text-[#d70321]">{step.num}</span>
-                <p className="font-['Work_Sans'] font-normal text-xl text-[#3d3936] leading-snug">
+                <p className="font-['Work_Sans'] font-normal text-2xl text-[#3d3936] leading-snug">
                   {step.text}
                 </p>
               </div>
@@ -386,9 +386,9 @@ const LabsSection = () => {
             <span className="font-['Roboto_Mono'] text-[#d70321] text-xs font-bold tracking-[0.2em] uppercase mb-6 block">
               n2Labs
             </span>
-            <h2 className="font-['Work_Sans'] font-bold text-5xl md:text-7xl mb-10 leading-tight tracking-tight">
+            <h1 className="font-['Work_Sans'] font-bold text-5xl md:text-7xl lg:text-8xl leading-[0.9] tracking-[-0.03em] mb-10">
               Built by engineers. Grounded in operations. Designed to last.
-            </h2>
+            </h1>
           </motion.div>
           
           <motion.div
@@ -421,8 +421,8 @@ const LabsSection = () => {
               { title: "Agile design partner + product mindset", desc: "We co-create with teams who care about adoption, not shelfware." },
             ].map((stat, i) => (
               <div key={i} className="mb-10 last:mb-0">
-                <h4 className="font-['Work_Sans'] font-bold text-2xl mb-3 leading-tight">{stat.title}</h4>
-                <p className="font-['Work_Sans'] font-light text-lg text-[#6f6f6f]">{stat.desc}</p>
+                <h1 className="font-['Work_Sans'] font-bold text-2xl mb-3 leading-[0.9] tracking-[-0.03em]">{stat.title}</h1>
+                <p className="font-['Work_Sans'] font-light text-xl text-[#6f6f6f]">{stat.desc}</p>
               </div>
             ))}
           </div>
@@ -442,9 +442,9 @@ const AccessSection = () => {
   return (
     <section id="access" className="py-32 px-6 bg-black text-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto relative z-10 text-center">
-        <h2 className="font-['Work_Sans'] font-bold text-5xl md:text-7xl lg:text-8xl leading-[0.9] tracking-tight mb-20 max-w-5xl mx-auto">
+        <h1 className="font-['Work_Sans'] font-bold text-5xl md:text-7xl lg:text-8xl leading-[0.9] tracking-[-0.03em] mb-20 max-w-5xl mx-auto">
           Apply for access n2Labs and help us design the future of data intelligence
-        </h2>
+        </h1>
 
         <div className="grid md:grid-cols-3 gap-6 mb-24">
           {tableData.map((col, i) => (
