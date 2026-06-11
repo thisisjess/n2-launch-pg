@@ -35,7 +35,7 @@ This project was exported from Figma Make and lightly customized (e.g. navbar CT
 
 The site is protected by a lightweight client-side password splash screen (using the official red N² circle logo from `MDMi_Asset_Overview_V5.pdf`).
 
-- Default password: `n2labs`
+- Default password: `thisisjess`
 - Override by setting the `VITE_DEMO_PASSWORD` environment variable (recommended for production previews).
 - Access is remembered per browser session via `sessionStorage` (close the tab/window to reset).
 

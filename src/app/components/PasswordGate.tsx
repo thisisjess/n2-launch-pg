@@ -26,7 +26,7 @@ export default function PasswordGate({ children }: PasswordGateProps) {
 
   // Change this default or (better) set VITE_DEMO_PASSWORD in Vercel project env vars
   // for Production + Preview environments.
-  const DEMO_PASSWORD = import.meta.env.VITE_DEMO_PASSWORD || "n2labs";
+  const DEMO_PASSWORD = import.meta.env.VITE_DEMO_PASSWORD || "thisisjess";
 
   // Restore access from this browser session
   useEffect(() => {
