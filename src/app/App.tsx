@@ -126,9 +126,9 @@ const LogoCloud = () => {
 
   return (
     <div className="mt-32 border-t border-[#e9e9e9] pt-20 text-center">
-      <p className="font-['Roboto_Mono'] text-xs text-[#6f6f6f] mb-12 uppercase tracking-widest">
+      <h3 className="font-['Roboto_Mono'] text-sm md:text-base text-[#6f6f6f] mb-12 uppercase tracking-widest">
         Development contributions involving & validated in complex environments
-      </p>
+      </h3>
       <div className="flex flex-wrap justify-center gap-x-12 gap-y-8 max-w-5xl mx-auto">
         {logos.map((logo, i) => (
           <span
