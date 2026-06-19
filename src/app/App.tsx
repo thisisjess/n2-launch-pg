@@ -4,16 +4,19 @@ import { Menu, X, ArrowUpRight, Check, Search, ChevronDown, ChevronRight, Extern
 import { ImageWithFallback } from "./components/figma/ImageWithFallback";
 import { DashboardMockup } from "./components/dashboard-mockup";
 import PasswordGate from "./components/PasswordGate";
+import { N2LabsLogo } from "./components/N2LabsLogo";
 
 // Assets from imports
 import svgPaths from "../imports/Mobile/svg-q236zk8bca";
 import imgLogo from "../imports/Mobile/b336fb71f2d2247dadd41666e98bffac92058c9f.png";
-import imgBenefit1 from "../imports/Mobile/dd493b4a4e8707128ad365cb3b63b96d4d074d01.png";
-import imgBenefit2 from "../imports/Mobile/e38b7eff4ca78c7aaa0c17311f6b9758bc6dae06.png";
-import imgBenefit3 from "../imports/Mobile/cb9687ee5424ed01a88c043b8675b7371b9d6a72.png";
-import imgBenefit4 from "../imports/Mobile/3e66c746577193b0d6be648f7cd7b5590972b634.png";
+import imgBenefit1 from "../assets/benefits/benefit-1-project-card.png";
+import imgBenefit2 from "../assets/benefits/benefit-2-import-wizard.png";
+import imgBenefit3 from "../assets/benefits/benefit-3-projects-overview.png";
+import imgBenefit4 from "../assets/benefits/benefit-4-my-flows-idle.png";
 import imgLabs from "../imports/Mobile/7df302eb8abcfc114bd55eb4551e42eb33a28ac1.png";
-import imgN2Studio from "../imports/N2Studio-2/n2studio-screenshot.png";
+import imgDesignDashboard from "../assets/design/design-dashboard-full.png";
+
+const EARLY_ACCESS_FORM_URL = "https://forms.mdmi.com/mdmiportal3271/form/N2ition/formperma/donw_JfIu5vJIW6NgEvPofnRzKFMJur1NPgSSKSypr8";
 
 // --- Components ---
 
@@ -48,10 +51,12 @@ const Navbar = () => {
             </a>
           ))}
           <a
-            href="#sign-up"
+            href={EARLY_ACCESS_FORM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="bg-[#d70321] text-white px-6 py-2.5 rounded-full font-['DM_Sans'] font-bold text-sm flex items-center gap-2 hover:bg-[#b0021b] transition-colors"
           >
-            Learn More
+            Early Access
             <ArrowUpRight size={14} />
           </a>
         </div>
@@ -82,11 +87,13 @@ const Navbar = () => {
               </a>
             ))}
             <a
-              href="#sign-up"
+              href={EARLY_ACCESS_FORM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => setIsOpen(false)}
               className="bg-[#d70321] text-white py-4 rounded-full font-['DM_Sans'] font-bold text-center flex items-center justify-center gap-2"
             >
-              Learn More
+              Early Access
               <ArrowUpRight size={16} />
             </a>
           </motion.div>
@@ -240,21 +247,29 @@ const Benefits = () => {
   const benefits = [
     {
       img: imgBenefit1,
+      alt: "n2uition project card with domain chips, dataset and job counts, collaborator avatars, and last-updated affordance",
+      objectPosition: "center center",
       title: "Governed trust by design",
       desc: "Knowledge isn’t useful if it can’t be trusted. n2uition captures engineer context so every result is explainable, audit-ready, and decision-ready across teams and tools.",
     },
     {
       img: imgBenefit2,
+      alt: "Import flow wizard drag-and-drop upload zone with choose file button",
+      objectPosition: "center center",
       title: "Adoption in the flow of work",
       desc: "Implementation-first by design. Templates, forms, and connectors map to real workflows and handoffs so engineers capture once and reuse everywhere.",
     },
     {
       img: imgBenefit3,
+      alt: "n2uition projects grid with n2 demo red-accent cards showing domains, datasets, jobs, and collaborators",
+      objectPosition: "center top",
       title: "Ecosystem fit, not a silo",
       desc: "n2uition is an independent front end that’s model- and platform-agnostic. Use stand alone or as a pre-processor.",
     },
     {
       img: imgBenefit4,
+      alt: "n2flow All flows table with progress bars, status chips, and idle-day indicators in n2 demo theme",
+      objectPosition: "left top",
       title: "Clarity, speed, and security",
       desc: "Built for complex, regulated environments without requiring teams to become software experts.",
     },
@@ -288,8 +303,9 @@ const Benefits = () => {
               <div className="aspect-[1.4] overflow-hidden rounded-xl mb-6 bg-gray-50">
                 <ImageWithFallback
                   src={benefit.img}
-                  alt={benefit.title}
+                  alt={benefit.alt}
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                  style={{ objectPosition: benefit.objectPosition }}
                 />
               </div>
               <div className="px-4 pb-6">
@@ -315,59 +331,76 @@ const DesignShowcase = () => {
     { num: "05", text: "Clarity over clutter: surface what’s trusted and what’s being used." },
   ];
 
+  const designSteps = (
+    <>
+      <div className="space-y-4 mb-12">
+        {steps.map((step, i) => (
+          <div key={i} className="flex gap-6 items-start py-5 border-t border-[#e9e9e9]">
+            <span className="font-['Work_Sans'] font-bold text-xl text-[#d70321]">{step.num}</span>
+            <p className="font-['Work_Sans'] font-normal text-2xl text-[#3d3936] leading-snug">
+              {step.text}
+            </p>
+          </div>
+        ))}
+      </div>
+      <a
+        href="#access"
+        className="inline-flex bg-[#d70321] text-white px-10 py-5 rounded-full font-['DM_Sans'] font-bold text-lg hover:bg-[#b0021b] transition-all transform hover:scale-105"
+      >
+        Get Access
+      </a>
+    </>
+  );
+
   return (
-    <section id="design" className="py-20 px-6 max-w-7xl mx-auto overflow-hidden">
-      <div className="grid lg:grid-cols-2 gap-16 items-center">
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <span className="font-['Roboto_Mono'] text-[#d70321] text-xs font-bold tracking-[0.2em] uppercase mb-6 block">
-            Design
-          </span>
-          <h1 className="font-['Work_Sans'] font-bold text-5xl md:text-7xl lg:text-8xl leading-[0.9] tracking-[-0.03em] mb-10">
-            Less platform. More progress.
-          </h1>
-          <p className="font-['Work_Sans'] font-light text-xl md:text-2xl text-[#6f6f6f] leading-relaxed mb-12">
-            You shouldn’t need a specialist admin crew to keep knowledge usable, and shouldn’t have to knock on the closed door of the hermit Hazards Officer at the end of the hallway to ask him to share his handwritten lab results either. Neither of you want that. n2uition is modular and workflow-led, so teams can start small, get value quickly, and scale without the overhead.
-          </p>
-
-          <div className="space-y-4 mb-12">
-            {steps.map((step, i) => (
-              <div key={i} className="flex gap-6 items-start py-5 border-t border-[#e9e9e9]">
-                <span className="font-['Work_Sans'] font-bold text-xl text-[#d70321]">{step.num}</span>
-                <p className="font-['Work_Sans'] font-normal text-2xl text-[#3d3936] leading-snug">
-                  {step.text}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          <a
-            href="#access"
-            className="inline-flex bg-[#d70321] text-white px-10 py-5 rounded-full font-['DM_Sans'] font-bold text-lg hover:bg-[#b0021b] transition-all transform hover:scale-105"
+    <section id="design" className="py-20 lg:py-28">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 lg:items-stretch">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="order-1 flex flex-col"
           >
-            Get Access
-          </a>
-        </motion.div>
+            <span className="font-['Roboto_Mono'] text-[#d70321] text-xs font-bold tracking-[0.2em] uppercase mb-6 block">
+              Design
+            </span>
+            <h1 className="font-['Work_Sans'] font-bold text-5xl md:text-7xl lg:text-5xl xl:text-6xl leading-[0.9] tracking-[-0.03em] mb-8">
+              Less platform. More progress.
+            </h1>
+            <p className="font-['Work_Sans'] font-light text-xl md:text-2xl text-[#6f6f6f] leading-relaxed mb-10">
+              You shouldn’t need a specialist admin crew to keep knowledge usable, and shouldn’t have to knock on the closed door of the hermit Hazards Officer at the end of the hallway to ask him to share his handwritten lab results either. Neither of you want that. n2uition is modular and workflow-led, so teams can start small, get value quickly, and scale without the overhead.
+            </p>
+            <div className="hidden lg:block">{designSteps}</div>
+          </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="lg:-mr-10"
-        >
-          <div className="bg-white rounded-xl shadow-2xl border border-[#e9e9e9] overflow-hidden">
-            <ImageWithFallback
-              src={imgN2Studio}
-              alt="n2ition platform dashboard"
-              className="w-full h-auto object-cover"
-            />
-          </div>
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="order-2 lg:h-full min-h-0"
+          >
+            <div className="rounded-2xl shadow-2xl border border-[#e9e9e9] overflow-hidden bg-white w-full aspect-[4/3] lg:aspect-auto lg:h-full min-h-0">
+              <ImageWithFallback
+                src={imgDesignDashboard}
+                alt="n2ition platform dashboard with N²ITION branding, sidebar navigation, and Ingest, Organize, Discover, and Share phase metric cards"
+                className="w-full h-full object-cover object-left-top block"
+              />
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="lg:hidden order-3 col-span-1"
+          >
+            {designSteps}
+          </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -383,9 +416,9 @@ const LabsSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <span className="font-['Roboto_Mono'] text-[#d70321] text-xs font-bold tracking-[0.2em] uppercase mb-6 block">
-              n2Labs
-            </span>
+            <div className="mb-8">
+              <N2LabsLogo size="md" variant="light" />
+            </div>
             <h1 className="font-['Work_Sans'] font-bold text-5xl md:text-7xl lg:text-8xl leading-[0.9] tracking-[-0.03em] mb-10">
               Built by engineers. Grounded in operations. Designed to last.
             </h1>
@@ -411,8 +444,18 @@ const LabsSection = () => {
         </div>
 
         <div className="grid lg:grid-cols-3 gap-12 items-stretch">
-          <div className="lg:col-span-2 rounded-[32px] overflow-hidden min-h-[400px]">
-            <ImageWithFallback src={imgLabs} alt="n2Labs" className="w-full h-full object-cover" />
+          <div className="lg:col-span-2 relative rounded-[32px] overflow-hidden min-h-[400px] bg-[#231f20]">
+            <ImageWithFallback
+              src={imgLabs}
+              alt="n2Labs team collaborating in the lab"
+              className="w-full h-full min-h-[400px] object-cover grayscale contrast-[1.05]"
+            />
+            <div
+              className="absolute bottom-6 left-6 pointer-events-none"
+              aria-hidden="true"
+            >
+              <N2LabsLogo size="sm" variant="dark" />
+            </div>
           </div>
           <div className="flex flex-col gap-1 border-l border-[#e9e9e9] pl-10 py-10">
             {[
@@ -442,8 +485,17 @@ const AccessSection = () => {
   return (
     <section id="access" className="py-32 px-6 bg-black text-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto relative z-10 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex justify-center mb-14"
+        >
+          <N2LabsLogo size="lg" />
+        </motion.div>
+
         <h1 className="font-['Work_Sans'] font-bold text-5xl md:text-7xl lg:text-8xl leading-[0.9] tracking-[-0.03em] mb-20 max-w-5xl mx-auto">
-          Apply for access n2Labs and help us design the future of data intelligence
+          Apply for access and help us design the future of data intelligence
         </h1>
 
         <div className="grid md:grid-cols-3 gap-6 mb-24">
@@ -473,7 +525,7 @@ const AccessSection = () => {
 
         <div id="sign-up" className="max-w-xl mx-auto text-center">
           <a
-            href="https://forms.zohopublic.com/[YOUR-ZOHO-FORM-ID-HERE]"
+            href={EARLY_ACCESS_FORM_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 bg-[#d70321] text-white px-12 py-6 rounded-full font-['DM_Sans'] font-bold text-xl hover:bg-[#b0021b] transition-all transform hover:scale-[1.02]"
@@ -482,7 +534,7 @@ const AccessSection = () => {
             <ExternalLink size={14} className="opacity-70" />
           </a>
           <p className="font-['Roboto_Mono'] text-sm text-white/60 tracking-tight leading-relaxed mt-6 max-w-md mx-auto">
-            This will open our Zoho form in a new tab. For now, early access applications are collected there.
+            This will open our early access form in a new tab.
           </p>
         </div>
       </div>

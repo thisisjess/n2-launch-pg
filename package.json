@@ -10,7 +10,11 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "dev": "vite"
+    "dev": "vite",
+    "capture:benefits": "node scripts/capture-benefit-screenshots.mjs",
+    "capture:design": "node scripts/capture-design-dashboard.mjs",
+    "capture:platform": "node scripts/capture-platform-screenshots.mjs",
+    "export:labs-logos": "node scripts/export-labs-logos-bi.mjs"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",
