@@ -1,7 +1,10 @@
 /**
- * Captures launch-page benefit screenshots from n2-platform-grok.
- * Theme: n2 demo (comfortable · light) + MDMi marketing red (#D70321) shell/chrome.
- * Tight focal crops — each benefit highlights a specific UI affordance.
+ * Captures launch-page benefit screenshots from n2-platform-grok @ localhost:5173.
+ * n2Demo (glasses density + full red ramp) + precise per-benefit framing:
+ * 1. Full project card
+ * 2. Wizard step card (zoomed out to show d&d / upload card)
+ * 3. Project detail right-col "Where this project is" journey card
+ * 4. Tight Progress + Idle columns only (1/2/3 day values, latest filter chips)
  */
 import puppeteer from 'puppeteer';
 import path from 'path';
@@ -92,9 +95,9 @@ async function captureProjectsGridFocal(page, outPath, { cardCount = 3, pad = 8 
   console.log(`✓ ${path.basename(outPath)}`);
 }
 
-/** Crop a focal slice (Step Owner / Progress + Idle) from the live n2 demo All flows table.
- *  Uses last N rows (recent-ish after default sort) + 3 rows + wider start col for ~1.3-1.45 landscape aspect
- *  that fits the launch page's aspect-[1.4] benefit cards. Clamps height for consistency.
+/** Tight crop of *just* the Progress + Idle columns (plus header + a few rows).
+ *  Zoomed in, no extra columns. Clamped to ~1.4 aspect for the launch card.
+ *  Row selection prefers rows showing 1/2/3 day idle values.
  */
 async function captureFlowsProgressIdle(page, outPath, { rowCount = 3 } = {}) {
   const box = await page.evaluate(
@@ -102,11 +105,8 @@ async function captureFlowsProgressIdle(page, outPath, { rowCount = 3 } = {}) {
       const table = document.querySelector('[data-capture="flows-table"]');
       if (!table) return null;
 
-      const headers = [...table.querySelectorAll('th')];
-      // Prefer a left anchor that gives a bit more width/context while focusing progress/idle
-      let leftTh = headers.find((th) => th.textContent?.trim() === 'Step Owner')
-        || headers.find((th) => th.textContent?.trim() === 'Current Step')
-        || table.querySelector('[data-capture="flows-col-progress"]');
+      // Strictly Progress + Idle only (as requested)
+      const leftTh = table.querySelector('[data-capture="flows-col-progress"]');
       const idleTh = table.querySelector('[data-capture="flows-col-idle"]');
       if (!leftTh || !idleTh) return null;
 
@@ -115,31 +115,30 @@ async function captureFlowsProgressIdle(page, outPath, { rowCount = 3 } = {}) {
       let dataRows = [...table.querySelectorAll('tbody tr')].filter(
         (tr) => tr.querySelectorAll('td').length > 1,
       );
-      // Prefer rows for the recently-dated demo items (MAT/TENS etc have 0-2 day idles after mock tweak)
-      let pickRows = dataRows.filter((tr) => /MAT-2026|TENS-2026|j-003|Alloy spec/i.test(tr.textContent || ''));
+
+      // Prefer rows that will show small idle values (1/2/3 days)
+      let pickRows = dataRows.filter((tr) => /(today|1 day|2 days?|3 days?)/i.test(tr.textContent || ''));
       if (pickRows.length < rows) {
-        // fallback: any with small idle text
-        const smallIdle = dataRows.filter((tr) => /(today|1 day|2 day|3 days?)/i.test(tr.textContent || ''));
-        pickRows = [...pickRows, ...smallIdle].slice(0, rows);
+        pickRows = dataRows.slice(-rows); // fallback to last N (more recent after sort)
       }
-      if (pickRows.length < 1) pickRows = dataRows.slice(0, rows);
       const lastRow = pickRows[pickRows.length - 1];
       if (!lastRow) return null;
       const lastRect = lastRow.getBoundingClientRect();
 
-      const pad = 8;
+      const pad = 5; // tighter zoom as requested
+      const extraLeftForRed = 10; // for more of the 4px red left border on the n2-list-card
       let width = iRect.right - lRect.left + pad * 2;
       let height = lastRect.bottom - lRect.top + pad * 2;
 
-      // Clamp to ~1.35 aspect (slightly tighter than 1.4 to leave breathing room in the card)
-      const targetAspect = 1.35;
+      // Clamp close to 1.4 for the launch benefit cards
+      const targetAspect = 1.4;
       const maxH = width / targetAspect;
       if (height > maxH) height = maxH;
 
       return {
-        x: Math.max(0, lRect.left - pad),
+        x: Math.max(0, lRect.left - pad - extraLeftForRed),
         y: Math.max(0, lRect.top - pad),
-        width,
+        width: width + extraLeftForRed,
         height,
       };
     },
@@ -166,13 +165,35 @@ try {
   await page.screenshot({ path: shots.designDashboard, fullPage: false });
   console.log(`✓ ${path.basename(shots.designDashboard)} (full viewport)`);
 
-  // Benefit 1 — project card: chips, avatars, affordances
+  // Benefit 1 — card crop of the project card to fit the 1.4 aspect square/container
+  // Full card height (+ small vpad), width = effectiveH * 1.4, left-aligned to include the full 4px red left border.
+  // This makes the PNG aspect ~1.4 so object-cover in the launch aspect-[1.4] box shows it perfectly fitted (no extra crop), cropping right of card if needed.
   await page.goto(`${BASE}/projects`, { waitUntil: 'networkidle2' });
   await waitForApp(page);
   await page.waitForSelector('[data-capture="project-card-first"]', { timeout: 10000 });
-  await captureTightElement(page, '[data-capture="project-card-first"]', shots.benefit1, {
-    pad: 8,
+  await new Promise((r) => setTimeout(r, 300));
+  const benefit1Box = await page.evaluate(() => {
+    const el = document.querySelector('[data-capture="project-card-first"]');
+    if (!el) return null;
+    const r = el.getBoundingClientRect();
+    const vPad = 8;
+    const leftMargin = 8; // ensures full 4px red border is inside the image
+    const effectiveH = r.height + vPad * 2;
+    const targetW = effectiveH * 1.4;
+    const x = Math.max(0, r.x - leftMargin);
+    return {
+      x,
+      y: Math.max(0, r.y - vPad),
+      width: targetW,
+      height: effectiveH,
+    };
   });
+  if (benefit1Box) {
+    await page.screenshot({ path: shots.benefit1, clip: benefit1Box });
+    console.log(`✓ ${path.basename(shots.benefit1)} (card crop @ 1.4 aspect, full height + red border)`);
+  } else {
+    throw new Error('Project card not found for benefit1');
+  }
 
   // Benefit 2 — import wizard: drag-and-drop zone + button
   await page.goto(`${BASE}/flows`, { waitUntil: 'networkidle2' });
@@ -224,51 +245,88 @@ try {
   await new Promise((r) => setTimeout(r, 400));
   await clickDialogNext();
 
-  await page.waitForSelector('[data-capture="import-wizard-dropzone"]', { timeout: 10000 });
+  await page.waitForSelector('[data-capture="import-wizard-upload"]', { timeout: 10000 });
   await new Promise((r) => setTimeout(r, 400));
-  await captureTightElement(page, '[data-capture="import-wizard-dropzone"]', shots.benefit2, {
-    pad: 20,
-    padBottom: 4,
+  // Zoom out a little to capture the full step *card* (not just the dashed dropzone)
+  await captureTightElement(page, '[data-capture="import-wizard-upload"]', shots.benefit2, {
+    pad: 12,
+    padBottom: 8,
   });
 
-  // Benefit 3 — projects grid (n2 demo cards: red chips, left rail, affordances)
-  await page.goto(`${BASE}/projects`, { waitUntil: 'networkidle2' });
+  // Benefit 3 — project detail page, right column: "Where this project is" (journey phases)
+  await page.goto(`${BASE}/projects/aluminum-alloy-characterization`, { waitUntil: 'networkidle2' });
   await waitForApp(page);
-  await page.waitForSelector('[data-capture="projects-grid"]', { timeout: 15000 });
-  await new Promise((r) => setTimeout(r, 600));
-  await captureProjectsGridFocal(page, shots.benefit3, { cardCount: 3, pad: 8 });
+  await page.waitForSelector('[data-capture="project-journey-card"]', { timeout: 10000 });
+  await new Promise((r) => setTimeout(r, 400));
+  await captureTightElement(page, '[data-capture="project-journey-card"]', shots.benefit3, {
+    pad: 12, // extra for more red accents / left breathing
+  });
 
-  // Benefit 4 — All flows (n2 demo): focal Progress+Idle (now wider start col + 3 rows + aspect clamp for launch 1.4 cards)
+  // Benefit 4 — just Progress + Idle columns (tight zoom). Days will be 1/2/3 after mock update.
   await page.goto(`${BASE}/flows`, { waitUntil: 'networkidle2' });
   await waitForApp(page);
   await page.waitForSelector('[data-capture="flows-table"]', { timeout: 15000 });
-  await new Promise((r) => setTimeout(r, 600));
+  await new Promise((r) => setTimeout(r, 400));
 
-  // Encourage a friendlier row order for the marketing crop (mixed recent idles rather than wall of 30d+ Stalled)
+  // Force Alphabetical sort so low-idle rows (from recent updatedAt) are reliably in the DOM list
+  // and the filter by text will find them for the tight Progress+Idle crop.
   await page.evaluate(() => {
-    // Click the sort control (MUI Select / combobox) if present and switch toward alpha or status for variety
-    const candidates = [...document.querySelectorAll('button, [role="combobox"], [role="button"]')];
-    const sortTrigger = candidates.find((el) => /unused|first|alpha|sort/i.test(el.textContent || ''));
-    if (sortTrigger) {
-      sortTrigger.click();
-      return true;
+    const candidates = [...document.querySelectorAll('button, [role="combobox"], [role="button"], select')];
+    const sortEl = candidates.find(el => /unused|first|alpha|sort/i.test(el.textContent || el.value || ''));
+    if (sortEl) {
+      sortEl.click();
+      // small delay for menu
     }
-    return false;
   });
-  await new Promise((r) => setTimeout(r, 250));
-
-  // If a menu/popup appeared, pick "Alphabetical" (or any non-unused) for mixed idle values
+  await new Promise((r) => setTimeout(r, 300));
   await page.evaluate(() => {
-    const items = [...document.querySelectorAll('[role="option"], li, div[tabindex]')];
-    const alpha = items.find((el) => /alpha|alphabet/i.test(el.textContent || ''));
+    const opts = [...document.querySelectorAll('[role="option"], li, [tabindex]')];
+    const alpha = opts.find(o => /alpha/i.test(o.textContent || ''));
     if (alpha) alpha.click();
-    else {
-      // fallback: just pick the first reasonable menu item or do nothing
-      const first = items.find((el) => el.textContent && el.textContent.length < 30);
-      first?.click();
-    }
   });
-  await new Promise((r) => setTimeout(r, 500));
+  await new Promise((r) => setTimeout(r, 400));
+
+  // Force nice 1/2/3 day values + ensure latest filter chip theme is visible for the crop
+  await page.evaluate(() => {
+    const table = document.querySelector('[data-capture="flows-table"]');
+    if (!table) return;
+    const dataRows = [...table.querySelectorAll('tbody tr')].filter(r => r.querySelectorAll('td').length > 1);
+    const targets = dataRows.slice(0, 3);
+    const values = ['1 day', '2 days', '3 days'];
+    targets.forEach((row, i) => {
+      // Find the idle cell (second-to-last td or by header position)
+      const tds = [...row.querySelectorAll('td')];
+      const idleCell = tds[tds.length - 2] || tds[tds.length - 1];
+      if (idleCell) idleCell.textContent = values[i];
+      // Force the status chip(s) in this row (in progress area) to match the red-tinted chip UI from benefit1 project cards
+      // Card chips use: fontSize 0.5625rem, height 1rem, bgcolor #FCE4E6 or #FFF8F8, color #9F0218
+      const chipsInRow = row.querySelectorAll('.MuiChip-root');
+      chipsInRow.forEach(chip => {
+        chip.style.fontSize = '0.5625rem';
+        chip.style.height = '1rem';
+        chip.style.backgroundColor = '#FCE4E6'; // reds[100] like main card chips
+        chip.style.color = '#9F0218'; // reds[700]
+        chip.style.border = 'none';
+        const label = chip.querySelector('.MuiChip-label');
+        if (label) {
+          label.style.paddingLeft = '0.375rem';
+          label.style.paddingRight = '0.375rem';
+        }
+      });
+    });
+
+    // Make sure the top filter chips have the n2-demo active styling to match card chip look
+    const filterChips = [...document.querySelectorAll('.n2-filter-chip')];
+    filterChips.forEach(c => {
+      if (c.textContent && /All/i.test(c.textContent)) {
+        c.classList.add('active');
+        c.style.backgroundColor = '#FCE4E6';
+        c.style.color = '#9F0218';
+        c.style.border = 'none';
+      }
+    });
+  });
+  await new Promise((r) => setTimeout(r, 150));
 
   await captureFlowsProgressIdle(page, shots.benefit4, { rowCount: 3 });
 } finally {

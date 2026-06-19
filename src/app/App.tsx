@@ -247,8 +247,8 @@ const Benefits = () => {
   const benefits = [
     {
       img: imgBenefit1,
-      alt: "n2uition project card with domain chips, dataset and job counts, collaborator avatars, and last-updated affordance",
-      objectPosition: "center center",
+      alt: "n2uition project card with red left border, domain chips, dataset and job counts, collaborator avatars (fitted to 1.4 aspect)",
+      objectPosition: "left center",
       title: "Governed trust by design",
       desc: "Knowledge isn’t useful if it can’t be trusted. n2uition captures engineer context so every result is explainable, audit-ready, and decision-ready across teams and tools.",
     },
@@ -261,14 +261,14 @@ const Benefits = () => {
     },
     {
       img: imgBenefit3,
-      alt: "n2uition projects grid with n2 demo red-accent cards showing domains, datasets, jobs, and collaborators",
-      objectPosition: "center top",
+      alt: "Project detail right column showing 'Where this project is' journey phases (Ingest, Organize, Discover, Share) with counts and status in n2 demo theme",
+      objectPosition: "center center",
       title: "Ecosystem fit, not a silo",
       desc: "n2uition is an independent front end that’s model- and platform-agnostic. Use stand alone or as a pre-processor.",
     },
     {
       img: imgBenefit4,
-      alt: "n2flow All flows table with progress bars, status chips, and idle-day indicators in n2 demo theme",
+      alt: "Tight view of Progress and Idle columns (with 1/2/3 day values) and status in n2 demo theme",
       objectPosition: "left top",
       title: "Clarity, speed, and security",
       desc: "Built for complex, regulated environments without requiring teams to become software experts.",
